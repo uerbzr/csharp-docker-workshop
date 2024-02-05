@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  workshop.wwwapi:
+    image: ${DOCKER_REGISTRY-}workshopwwwapi
+    build:
+      context: .
+      dockerfile: workshop.wwwapi/Dockerfile
+    ports:
+    - "7000:7000"
+    - "7001:7001"
+    networks:
+      - sibbs-network
+  workshop.database:
+    container_name: 'workshop.database'
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+        - './.containers/cars-db:/var/lib/postgresql/data'
+    ports:
+        - 5432:5432
+    networks:
+      - sibbs-network
+
+networks:
+  sibbs-network:
+    driver: bridge
