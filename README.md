@@ -9,3 +9,4 @@ dotnet sln add **/*.csproj
 cd workshop.webapi
 dotnet publish -t:PublishContainer
 ```
+
