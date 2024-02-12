@@ -15,7 +15,7 @@ Accept-Language: en-US,en;q=0.5
   "model": "Polo"
 }
 ###
-### PUT (update) a car
+### DELETE a car
 
 DELETE {{host}}/cars/7
 
