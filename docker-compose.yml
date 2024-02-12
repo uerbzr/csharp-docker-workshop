@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   workshop.wwwapi:
-    image: ${DOCKER_REGISTRY-}workshopwwwapi
+    image: ${DOCKER_REGISTRY-}api
     build:
       context: .
       dockerfile: workshop.wwwapi/Dockerfile
@@ -11,6 +11,9 @@ services:
     - "7001:7001"
     networks:
       - sibbs-network
+    depends_on:
+      workshop.database:
+        condition: service_healthy
   workshop.database:
     container_name: 'workshop.database'
     image: postgres:latest
@@ -19,12 +22,20 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     volumes:
-        - './.containers/cars-db:/var/lib/postgresql/data'
+        - './.containers/cars-data:/var/lib/postgresql/data'
     ports:
         - 5432:5432
     networks:
       - sibbs-network
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres"]
+      interval: 1s
+      timeout: 5s
+      retries: 5
 
+volumes:
+  postgres_data:
+    driver: local
 networks:
   sibbs-network:
     driver: bridge

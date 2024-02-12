@@ -38,5 +38,19 @@ namespace workshop.wwwapi.Repository
             return await _table.FindAsync(id);
         }
 
+        public async Task<T> Update(T entity)
+        {
+            _table.Update(entity).State = EntityState.Modified;
+            await _db.SaveChangesAsync();
+            return entity;
+
+        }
+
+        public async Task<T> Delete(T entity)
+        {          
+            _db.Entry(entity).State = EntityState.Deleted;
+            await _db.SaveChangesAsync();
+            return entity;
+        }
     }
 }
