@@ -23,10 +23,10 @@ Install-Package NpgSql.EntityFrameworkCore.PostgreSql
 ```
 
 ## Observations
--Note how the Migrations are run programatically.  Necessary for when the application is started in Docker to generate the relevant tables in the database.
--Note the **Anonymous Object e.g.** 
+- Note MigrationRunner class which runs programatically.  Necessary for when the application is started.   in Docker to generate the relevant tables in the database.
+- Note the **Anonymous Object e.g.** 
 ```cs
 var anonymous = new { Make=entity.Make, Model=entity.Model };
 ```
--Generic ```Repository<T>``` Layer
--Note the ```workshop.wwwapi.http``` file.  When the project is running, this enables you to test endpoints easily!
+- Generic ```Repository<T>``` Layer
+- Note the ```workshop.wwwapi.http``` file.  When the project is running, this enables you to test endpoints easily!
